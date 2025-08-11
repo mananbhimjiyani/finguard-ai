@@ -1,5 +1,5 @@
-import { redirect } from 'next/navigation';
+import { OnboardingRedirect } from '@/components/onboarding/onboarding-redirect';
 
 export default function Home() {
-  redirect('/dashboard');
+  return <OnboardingRedirect />;
 }
