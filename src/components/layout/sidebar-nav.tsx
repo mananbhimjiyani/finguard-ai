@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, MessageSquare, Wallet, ClipboardCheck, Settings, Film } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, Wallet, ClipboardCheck, Settings } from 'lucide-react';
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
 
 const navItems = [
@@ -10,7 +10,6 @@ const navItems = [
   { href: '/chat', label: 'AI Chat', icon: MessageSquare, tooltip: 'AI Chat' },
   { href: '/portfolio', label: 'Portfolio', icon: Wallet, tooltip: 'Portfolio' },
   { href: '/risk-assessment', label: 'Risk Assessment', icon: ClipboardCheck, tooltip: 'Risk Assessment' },
-  { href: '/future-self', label: 'Future Visualizer', icon: Film, tooltip: 'Future Visualizer' },
   { href: '/settings', label: 'Settings', icon: Settings, tooltip: 'Settings' },
 ];
 

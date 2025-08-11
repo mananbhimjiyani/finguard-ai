@@ -10,8 +10,6 @@ import { superannuationAdvisor } from '@/ai/flows/superannuation-advisor';
 import type { SuperannuationAdvisorInput, SuperannuationAdvisorOutput } from '@/ai/flows/superannuation-advisor';
 import { assessPortfolioRisk } from '@/ai/flows/assess-portfolio-risk';
 import type { PortfolioRiskInput, PortfolioRiskOutput } from '@/ai/flows/assess-portfolio-risk';
-import { generateFinancialProjectionVideo } from '@/ai/flows/generate-retirement-video';
-import type { GenerateFinancialProjectionVideoInput, GenerateFinancialProjectionVideoOutput } from '@/ai/flows/generate-retirement-video';
 
 export async function getRiskAnalysis(input: RiskAssessmentInput): Promise<RiskAssessmentOutput> {
   return await analyzeRiskAssessment(input);
@@ -31,8 +29,4 @@ export async function detectAnomaly(input: DetectAnomalousTransactionsInput): Pr
 
 export async function assessPortfolio(input: PortfolioRiskInput): Promise<PortfolioRiskOutput> {
   return await assessPortfolioRisk(input);
-}
-
-export async function generateFinancialVideo(input: GenerateFinancialProjectionVideoInput): Promise<GenerateFinancialProjectionVideoOutput> {
-  return await generateFinancialProjectionVideo(input);
 }

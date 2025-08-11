@@ -1,6 +1,6 @@
 # FinGuard AI: Your Personal Financial Companion
 
-FinGuard AI is a cutting-edge financial management application designed to empower users with intelligent tools for retirement planning, investment analysis, and financial security. By leveraging advanced AI, including generative models for chat, data analysis, and video creation, FinGuard AI provides a personalized, intuitive, and highly engaging platform to help users navigate the complexities of their financial journey.
+FinGuard AI is a cutting-edge financial management application designed to empower users with intelligent tools for retirement planning, investment analysis, and financial security. By leveraging advanced AI, including generative models for chat and data analysis, FinGuard AI provides a personalized, intuitive, and highly engaging platform to help users navigate the complexities of their financial journey.
 
 ## Key Features
 
@@ -16,10 +16,7 @@ The dashboard features an AI-powered query tool that demystifies complex financi
 ### 4. Transaction Anomaly Detection
 To enhance security, FinGuard AI includes a fraud detection feature on the dashboard. It uses an AI flow to analyze selected transactions against the user's spending history and profile, flagging suspicious activity and providing a clear explanation for its assessment.
 
-### 5. AI-Generated "Future Self" Visualizer
-For a truly "out of the box" experience, the application includes a feature that generates a personalized video of the user's financial journey. By describing their retirement dreams, the user can watch an AI-generated video that brings their goals to life, creating a powerful emotional connection to their financial planning and motivating them to stay on track.
-
-### 6. Comprehensive Financial Dashboard
+### 5. Comprehensive Financial Dashboard
 The central dashboard provides a holistic view of the user's financial health, including:
 - **Retirement Goal Tracking:** Visual progress towards their retirement goal.
 - **Portfolio Diversity:** An interactive chart showing the current asset mix.

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Bot, LayoutDashboard, MessageSquare, Film, Sparkles } from 'lucide-react';
+import { Bot, LayoutDashboard, MessageSquare, Sparkles } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -24,11 +24,6 @@ const onboardingSteps = [
     icon: LayoutDashboard,
     title: 'Comprehensive Dashboard',
     description: 'Get a holistic view of your finances. Track your retirement goals, analyze portfolio risk, and detect anomalies all in one place.',
-  },
-  {
-    icon: Film,
-    title: 'Visualize Your Future Self',
-    description: 'A unique feature that generates a personalized video of your retirement dreams, making your financial goals feel more tangible and motivating.',
   },
 ];
 
