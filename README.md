@@ -23,4 +23,10 @@ The central dashboard provides a holistic view of the user's financial health, i
 - **Asset Allocation:** A comparison of the user's current vs. recommended asset allocation.
 - **Portfolio Risk Analysis:** An AI-powered assessment of the portfolio's risk level.
 
+### 6. Risk Tolerance Assessment
+Users can complete a guided questionnaire to understand their comfort with financial risk. The application uses an AI flow to analyze their answers and provide a clear risk profile (e.g., "Conservative," "Moderate," "Aggressive") and explains how that profile should shape their investment strategy.
+
+### 7. Seamless Onboarding Experience
+A smooth, multi-step onboarding flow introduces new users to the application's key features, ensuring they understand the value and functionality from their very first visit.
+
 FinGuard AI is more than just a financial app; it's an intelligent partner designed to provide clarity, security, and motivation for your financial future.
