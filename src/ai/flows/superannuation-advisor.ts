@@ -14,6 +14,9 @@ import {z} from 'genkit';
 const SuperannuationAdvisorInputSchema = z.object({
   query: z.string().describe("The user's financial query related to their superannuation."),
   userProfile: z.string().describe("A JSON string representing the user's profile data, including financial details and goals."),
+  // The following fields are optional and will be provided by the flow logic itself.
+  fixedStrategyResult: z.string().optional().describe("The result of the 'fixed' withdrawal simulation. This is for internal use."),
+  dynamicStrategyResult: z.string().optional().describe("The result of the 'dynamic' withdrawal simulation. This is for internal use."),
 });
 export type SuperannuationAdvisorInput = z.infer<typeof SuperannuationAdvisorInputSchema>;
 
@@ -28,6 +31,12 @@ const withdrawalSimulationArgs = z.object({
     strategy: z.enum(['fixed', 'dynamic']).describe("The withdrawal strategy to simulate. 'fixed' for a constant percentage, 'dynamic' for adjustments based on market performance."),
 });
 
+type WithdrawalSimulationOutput = {
+    yearsOfPayout: number;
+    finalBalance: number;
+    annualPayout: number;
+};
+
 const simulateWithdrawalStrategy = ai.defineTool(
     {
       name: 'simulateWithdrawalStrategy',
@@ -39,7 +48,7 @@ const simulateWithdrawalStrategy = ai.defineTool(
         annualPayout: z.number().describe("The average annual payout amount."),
       }),
     },
-    async (input) => {
+    async (input) : Promise<WithdrawalSimulationOutput> => {
       // This is a simplified simulation model. A real-world application would use more sophisticated financial modeling.
       const { retirementAge, initialWithdrawalRate, strategy } = input;
       const user = { currentSavings: 250000, age: 35, retirementGoal: 1500000 }; 
@@ -53,8 +62,10 @@ const simulateWithdrawalStrategy = ai.defineTool(
       const lifeExpectancy = 85;
       const payoutYears = lifeExpectancy - retirementAge;
       let totalPayout = 0;
+      let actualPayoutYears = 0;
 
       for (let year = 0; year < payoutYears; year++) {
+        actualPayoutYears++;
         const marketPerformance = (Math.random() - 0.4) * 0.2 + growthRate; // Simulate market volatility
         let withdrawalRate = initialWithdrawalRate / 100;
         
@@ -76,9 +87,9 @@ const simulateWithdrawalStrategy = ai.defineTool(
       }
       
       return {
-        yearsOfPayout: Math.min(payoutYears, lifeExpectancy - user.age),
+        yearsOfPayout: actualPayoutYears,
         finalBalance: Math.max(0, currentBalance),
-        annualPayout: totalPayout / payoutYears,
+        annualPayout: totalPayout / actualPayoutYears,
       };
     }
   );
@@ -96,15 +107,24 @@ const prompt = ai.definePrompt({
   prompt: `You are an expert AI Investment Advisor. Your goal is to help users make informed investment decisions.
 Analyze the user's query and their profile data.
 
-- If the user asks about retirement withdrawal strategies, use the 'simulateWithdrawalStrategy' tool.
-- If the user asks to compare strategies but does not provide a retirement age or withdrawal rate, **assume a retirement age of 65 and an initial withdrawal rate of 4% for the simulation.**
-- When asked to compare, you **MUST** call the tool twice: once for 'fixed' and once for 'dynamic', using the same assumptions for both.
-- Present the results of any simulations in a clear, comparative format. Start with a brief intro, then show the results for the 'Fixed' strategy, then the 'Dynamic' strategy, and conclude with a brief summary of the trade-offs.
+- If the user asks about a specific retirement withdrawal strategy (not a comparison), use the 'simulateWithdrawalStrategy' tool.
+- If you are provided with pre-computed simulation results for 'fixed' and 'dynamic' strategies, your primary goal is to present these results to the user in a clear, comparative format.
+- When presenting a comparison, start with a brief intro, then show the results for the 'Fixed' strategy, then the 'Dynamic' strategy, and conclude with a brief summary of the trade-offs.
 - Provide personalized recommendations and clear explanations.
 - Be professional, yet friendly. Do not mention that you are an AI or add disclaimers.
 
 User Profile:
 {{{userProfile}}}
+
+{{#if fixedStrategyResult}}
+**Comparison Simulation Results:**
+
+Fixed Strategy Results:
+{{{fixedStrategyResult}}}
+
+Dynamic Strategy Results:
+{{{dynamicStrategyResult}}}
+{{/if}}
 
 User Query:
 "{{{query}}}"
@@ -118,11 +138,38 @@ const superannuationAdvisorFlow = ai.defineFlow(
     inputSchema: SuperannuationAdvisorInputSchema,
     outputSchema: SuperannuationAdvisorOutputSchema,
   },
-  async input => {
-    const {output} = await prompt(input);
-    if (!output) {
-      throw new Error('The model failed to generate a response. Please try again.');
+  async (input) => {
+    // Check if the user is asking for a comparison.
+    if (input.query.toLowerCase().includes('compare')) {
+      // Define default simulation parameters.
+      const simulationParams = { retirementAge: 65, initialWithdrawalRate: 4 };
+
+      // Run both simulations in parallel.
+      const [fixedResult, dynamicResult] = await Promise.all([
+        simulateWithdrawalStrategy({ ...simulationParams, strategy: 'fixed' }),
+        simulateWithdrawalStrategy({ ...simulationParams, strategy: 'dynamic' }),
+      ]);
+      
+      // Augment the input with the simulation results for the prompt.
+      const augmentedInput = {
+        ...input,
+        fixedStrategyResult: JSON.stringify(fixedResult, null, 2),
+        dynamicStrategyResult: JSON.stringify(dynamicResult, null, 2),
+      };
+
+      const { output } = await prompt(augmentedInput);
+      if (!output) {
+        throw new Error('The model failed to generate a comparison response. Please try again.');
+      }
+      return output;
+
+    } else {
+      // Handle non-comparison queries directly.
+      const { output } = await prompt(input);
+      if (!output) {
+        throw new Error('The model failed to generate a response. Please try again.');
+      }
+      return output;
     }
-    return output;
   }
 );
