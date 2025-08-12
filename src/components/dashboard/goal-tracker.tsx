@@ -5,7 +5,7 @@ import { userProfileData } from '@/lib/data';
 import { Flag } from 'lucide-react';
 
 export function GoalTracker() {
-  const { currentSavings, retirementGoal } = userProfileData;
+  const { Current_Savings: currentSavings, retirementGoal } = userProfileData;
   const progressPercentage = (currentSavings / retirementGoal) * 100;
   const formatCurrency = (value: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
 
