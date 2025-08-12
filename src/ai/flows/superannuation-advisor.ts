@@ -97,8 +97,9 @@ const prompt = ai.definePrompt({
 Analyze the user's query and their profile data.
 
 - If the user asks about retirement withdrawal strategies, use the 'simulateWithdrawalStrategy' tool.
-- If the user asks to compare strategies, you MUST call the tool twice: once for 'fixed' and once for 'dynamic'.
-- Present the results of any simulations in a clear, comparative format in your response.
+- If the user asks to compare strategies but does not provide a retirement age or withdrawal rate, **assume a retirement age of 65 and an initial withdrawal rate of 4% for the simulation.**
+- When asked to compare, you **MUST** call the tool twice: once for 'fixed' and once for 'dynamic', using the same assumptions for both.
+- Present the results of any simulations in a clear, comparative format. Start with a brief intro, then show the results for the 'Fixed' strategy, then the 'Dynamic' strategy, and conclude with a brief summary of the trade-offs.
 - Provide personalized recommendations and clear explanations.
 - Be professional, yet friendly. Do not mention that you are an AI or add disclaimers.
 
