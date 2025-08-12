@@ -114,7 +114,7 @@ export function ChatInterface() {
                   </div>
                   {message.role === 'user' && (
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src="https://placehold.co/32x32" data-ai-hint="user avatar" />
+                      <AvatarImage src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=32&h=32&auto=format&fit=crop" data-ai-hint="user avatar" />
                       <AvatarFallback>{userInitials}</AvatarFallback>
                     </Avatar>
                   )}

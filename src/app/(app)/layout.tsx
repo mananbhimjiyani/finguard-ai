@@ -36,7 +36,7 @@ export default function AppLayout({
             <div className="flex items-center gap-3">
               <span className="hidden sm:inline-block font-medium">{userProfileData.name}</span>
               <Avatar>
-                <AvatarImage src="https://placehold.co/32x32" alt={userProfileData.name} data-ai-hint="user avatar" />
+                <AvatarImage src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=32&h=32&auto=format&fit=crop" alt={userProfileData.name} data-ai-hint="user avatar" />
                 <AvatarFallback>{userInitials}</AvatarFallback>
               </Avatar>
             </div>
