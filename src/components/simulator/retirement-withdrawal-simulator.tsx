@@ -16,11 +16,11 @@ export function RetirementWithdrawalSimulator() {
   const handleSimulation = async (strategy: 'fixed' | 'dynamic' | 'comparison') => {
     let query = '';
     if (strategy === 'fixed') {
-      query = 'Simulate a fixed 4% withdrawal strategy starting at age 65.';
+      query = 'simulate_strategy:fixed';
     } else if (strategy === 'dynamic') {
-      query = 'Simulate a dynamic withdrawal strategy starting at age 65.';
+      query = 'simulate_strategy:dynamic';
     } else {
-      query = 'Compare a fixed vs. dynamic withdrawal strategy for my retirement.';
+      query = 'compare_strategies';
     }
     
     setIsLoading(true);

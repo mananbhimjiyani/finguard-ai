@@ -17,6 +17,8 @@ const SuperannuationAdvisorInputSchema = z.object({
   // The following fields are optional and will be provided by the flow logic itself.
   fixedStrategyResult: z.string().optional().describe("The result of the 'fixed' withdrawal simulation. This is for internal use."),
   dynamicStrategyResult: z.string().optional().describe("The result of the 'dynamic' withdrawal simulation. This is for internal use."),
+  singleStrategyResult: z.string().optional().describe("The result of a single withdrawal simulation. This is for internal use."),
+  strategyType: z.string().optional().describe("The type of single strategy being presented. This is for internal use."),
 });
 export type SuperannuationAdvisorInput = z.infer<typeof SuperannuationAdvisorInputSchema>;
 
@@ -107,10 +109,10 @@ const prompt = ai.definePrompt({
   prompt: `You are an expert AI Investment Advisor. Your goal is to help users make informed investment decisions.
 Analyze the user's query and their profile data.
 
-- If the user asks about a withdrawal strategy, use the 'simulateWithdrawalStrategy' tool.
-- **IMPORTANT**: If the user's query does not specify a retirement age or initial withdrawal rate, you MUST use a retirement age of 65 and an initial withdrawal rate of 4% for the simulation. Do NOT ask the user for this information.
-- If you are provided with pre-computed simulation results for 'fixed' and 'dynamic' strategies, your primary goal is to present these results to the user in a clear, comparative format.
-- When presenting a comparison, start with a brief intro, then show the results for the 'Fixed' strategy, then the 'Dynamic' strategy, and conclude with a brief summary of the trade-offs.
+- If you are provided with pre-computed simulation results, your primary goal is to present these results to the user in a clear, easy-to-understand format.
+- If comparing strategies, start with a brief intro, then show the results for the 'Fixed' strategy, then the 'Dynamic' strategy, and conclude with a brief summary of the trade-offs.
+- If presenting a single strategy, introduce it, explain what the results mean, and then show the results.
+- If the user asks a general question about withdrawal strategies, use the 'simulateWithdrawalStrategy' tool. If the user does not specify a retirement age or initial withdrawal rate, you MUST use a retirement age of 65 and an initial withdrawal rate of 4% for the simulation. Do NOT ask the user for this information.
 - Provide personalized recommendations and clear explanations.
 - Be professional, yet friendly. Do not mention that you are an AI or add disclaimers.
 
@@ -127,6 +129,12 @@ Dynamic Strategy Results:
 {{{dynamicStrategyResult}}}
 {{/if}}
 
+{{#if singleStrategyResult}}
+**{{strategyType}} Strategy Simulation Results:**
+
+{{{singleStrategyResult}}}
+{{/if}}
+
 User Query:
 "{{{query}}}"
 
@@ -140,11 +148,11 @@ const superannuationAdvisorFlow = ai.defineFlow(
     outputSchema: SuperannuationAdvisorOutputSchema,
   },
   async (input) => {
-    // Check if the user is asking for a comparison.
-    if (input.query.toLowerCase().includes('compare')) {
-      // Define default simulation parameters.
-      const simulationParams = { retirementAge: 65, initialWithdrawalRate: 4 };
+    // Define default simulation parameters.
+    const simulationParams = { retirementAge: 65, initialWithdrawalRate: 4 };
 
+    // Check if the user is asking for a comparison.
+    if (input.query.toLowerCase().includes('compare_strategies')) {
       // Run both simulations in parallel.
       const [fixedResult, dynamicResult] = await Promise.all([
         simulateWithdrawalStrategy({ ...simulationParams, strategy: 'fixed' }),
@@ -154,6 +162,7 @@ const superannuationAdvisorFlow = ai.defineFlow(
       // Augment the input with the simulation results for the prompt.
       const augmentedInput = {
         ...input,
+        query: "Please compare the fixed and dynamic withdrawal strategies based on the provided results.",
         fixedStrategyResult: JSON.stringify(fixedResult, null, 2),
         dynamicStrategyResult: JSON.stringify(dynamicResult, null, 2),
       };
@@ -164,8 +173,25 @@ const superannuationAdvisorFlow = ai.defineFlow(
       }
       return output;
 
+    } else if (input.query.toLowerCase().includes('simulate_strategy:')) {
+        const strategy = input.query.split(':')[1] as 'fixed' | 'dynamic';
+        const result = await simulateWithdrawalStrategy({ ...simulationParams, strategy });
+
+        const augmentedInput = {
+            ...input,
+            query: `Please explain the results of the ${strategy} withdrawal strategy.`,
+            singleStrategyResult: JSON.stringify(result, null, 2),
+            strategyType: strategy.charAt(0).toUpperCase() + strategy.slice(1),
+        };
+        
+        const { output } = await prompt(augmentedInput);
+        if (!output) {
+            throw new Error(`The model failed to generate a response for the ${strategy} strategy. Please try again.`);
+        }
+        return output;
+
     } else {
-      // Handle non-comparison queries directly.
+      // Handle general chat queries directly.
       const { output } = await prompt(input);
       if (!output) {
         throw new Error('The model failed to generate a response. Please try again.');
