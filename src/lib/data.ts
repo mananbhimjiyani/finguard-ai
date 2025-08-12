@@ -1,12 +1,22 @@
 export const userProfileData = {
-  name: 'Alex Doe',
-  email: 'alex.doe@example.com',
-  demographics: '35 years old, married, 2 dependents',
-  income: '$120,000 per year',
-  currentSavings: 250000,
-  retirementGoal: 1500000,
-  riskTolerance: 'Moderate',
+  "User_ID": "U1002",
+  "Age": 46,
+  "Gender": "Other",
+  "Country": "Australia",
+  "Employment_Status": "Self-employed",
+  "Annual_Income": 112003,
+  "Current_Savings": 284127,
+  "Retirement_Age_Goal": 60,
+  "Risk_Tolerance": "Medium",
+  "Contribution_Amount": 670,
+  "Contribution_Frequency": "Quarterly",
+  "Investment_Experience_Level": "Expert",
+  "Financial_Goals": "Home Purchase",
+  "name": "Alex Doe", // Keep a simple name for UI display
+  "email": "alex.doe@example.com", // Keep a simple email for UI display
+  "retirementGoal": 1500000 // Keep this for existing UI components
 };
+
 
 export const transactionHistoryData = JSON.stringify([
   { id: '1', date: '2023-10-01', description: 'Salary Deposit', amount: 5000, type: 'credit' },
@@ -49,12 +59,12 @@ export const recentTransactionsForAnomalyCheck = [
 
 
 export const portfolioData = {
-  totalValue: 250000,
+  totalValue: 284127, // Updated to match user profile
   holdings: [
-    { symbol: 'VOO', name: 'US Stocks', value: 100000, allocation: 40 },
-    { symbol: 'BND', name: 'Bonds', value: 50000, allocation: 20 },
-    { symbol: 'VXUS', name: 'Intl Stocks', value: 75000, allocation: 30 },
-    { symbol: 'VNQ', name: 'Real Estate', value: 25000, allocation: 10 },
+    { symbol: 'VOO', name: 'US Stocks', value: 113650, allocation: 40 },
+    { symbol: 'BND', name: 'Bonds', value: 56825, allocation: 20 },
+    { symbol: 'VXUS', name: 'Intl Stocks', value: 85238, allocation: 30 },
+    { symbol: 'VNQ', name: 'Real Estate', value: 28414, allocation: 10 },
     { symbol: 'CASH', name: 'Cash', value: 0, allocation: 0 },
   ],
   recommendedAllocation: [
@@ -65,11 +75,11 @@ export const portfolioData = {
     { name: 'Cash', value: 5 },
   ],
   performance: [
-    { month: 'Jan', value: 220000 },
-    { month: 'Feb', value: 225000 },
-    { month: 'Mar', value: 235000 },
-    { month: 'Apr', value: 230000 },
-    { month: 'May', value: 245000 },
-    { month: 'Jun', value: 250000 },
+    { month: 'Jan', value: 250000 },
+    { month: 'Feb', value: 255000 },
+    { month: 'Mar', value: 265000 },
+    { month: 'Apr', value: 260000 },
+    { month: 'May', value: 275000 },
+    { month: 'Jun', value: 284127 },
   ],
 };

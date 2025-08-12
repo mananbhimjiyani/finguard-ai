@@ -53,7 +53,7 @@ const simulateWithdrawalStrategy = ai.defineTool(
     async (input) : Promise<WithdrawalSimulationOutput> => {
       // This is a simplified simulation model. A real-world application would use more sophisticated financial modeling.
       const { retirementAge, initialWithdrawalRate, strategy } = input;
-      const user = { currentSavings: 250000, age: 35, retirementGoal: 1500000 }; 
+      const user = { currentSavings: 284127, age: 46, retirementGoal: 1500000 }; 
       const yearsToRetirement = retirementAge - user.age;
       const growthRate = 0.07; // Assumed average annual growth
       
@@ -106,14 +106,14 @@ const prompt = ai.definePrompt({
   input: {schema: SuperannuationAdvisorInputSchema},
   output: {schema: SuperannuationAdvisorOutputSchema},
   tools: [simulateWithdrawalStrategy],
-  prompt: `You are an expert AI Investment Advisor. Your goal is to help users make informed investment decisions.
-Analyze the user's query and their profile data.
+  prompt: `You are an expert AI Investment Advisor specializing in superannuation. Your goal is to provide personalized, data-driven advice.
+Analyze the user's query and their detailed profile data.
 
+- Your advice MUST be tailored to the user's specific circumstances, including their age, country, risk tolerance, and financial goals.
 - If you are provided with pre-computed simulation results, your primary goal is to present these results to the user in a clear, easy-to-understand format.
 - If comparing strategies, start with a brief intro, then show the results for the 'Fixed' strategy, then the 'Dynamic' strategy, and conclude with a brief summary of the trade-offs.
 - If presenting a single strategy, introduce it, explain what the results mean, and then show the results.
 - If the user asks a general question about withdrawal strategies, use the 'simulateWithdrawalStrategy' tool. If the user does not specify a retirement age or initial withdrawal rate, you MUST use a retirement age of 65 and an initial withdrawal rate of 4% for the simulation. Do NOT ask the user for this information.
-- Provide personalized recommendations and clear explanations.
 - Be professional, yet friendly. Do not mention that you are an AI or add disclaimers.
 
 User Profile:
@@ -173,8 +173,8 @@ const superannuationAdvisorFlow = ai.defineFlow(
       }
       return output;
 
-    } else if (input.query.toLowerCase().includes('simulate_strategy:')) {
-        const strategy = input.query.split(':')[1] as 'fixed' | 'dynamic';
+    } else if (input.query.toLowerCase().startsWith('simulate_strategy:')) {
+        const strategy = input.query.split(':')[1].trim() as 'fixed' | 'dynamic';
         const result = await simulateWithdrawalStrategy({ ...simulationParams, strategy });
 
         const augmentedInput = {
