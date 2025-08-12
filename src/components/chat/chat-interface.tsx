@@ -70,8 +70,8 @@ export function ChatInterface() {
 
   return (
     <div className="flex flex-col h-full">
-      <Card className="flex-grow flex flex-col">
-        <CardContent className="flex-grow p-4 flex flex-col">
+      <Card className="flex-1 flex flex-col min-h-0">
+        <CardContent className="flex-1 flex flex-col p-4">
           <ScrollArea className="flex-grow pr-4" ref={scrollAreaRef}>
             <div className="space-y-6">
               {messages.length === 0 && (
