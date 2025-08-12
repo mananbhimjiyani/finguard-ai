@@ -2,12 +2,13 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, MessageSquare, Wallet, ClipboardCheck, Settings, Video } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, Wallet, ClipboardCheck, Settings, Video, TestTube2 } from 'lucide-react';
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, tooltip: 'Dashboard' },
   { href: '/chat', label: 'AI Chat', icon: MessageSquare, tooltip: 'AI Chat' },
+  { href: '/withdrawal-simulator', label: 'Withdrawal Simulator', icon: TestTube2, tooltip: 'Withdrawal Simulator' },
   { href: '/portfolio', label: 'Portfolio', icon: Wallet, tooltip: 'Portfolio' },
   { href: '/risk-assessment', label: 'Risk Assessment', icon: ClipboardCheck, tooltip: 'Risk Assessment' },
   { href: '/future-self', label: 'Future Self', icon: Video, tooltip: 'Future Self Visualizer' },
