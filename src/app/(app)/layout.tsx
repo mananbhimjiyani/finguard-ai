@@ -20,10 +20,10 @@ export default function AppLayout({
         <Sidebar className="border-r">
           <SidebarHeader>
             <div className="flex items-center gap-3 p-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                <Bot className="h-6 w-6 text-primary-foreground" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <Bot className="h-6 w-6" />
               </div>
-              <span className="text-lg font-semibold text-primary">FinGuard AI</span>
+              <span className="text-lg font-semibold">FinGuard AI</span>
             </div>
           </SidebarHeader>
           <SidebarContent>

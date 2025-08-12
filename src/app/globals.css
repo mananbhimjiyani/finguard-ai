@@ -4,28 +4,28 @@
 
 @layer base {
   :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
+    --background: 111 23% 96%; /* Soft Sage - #E8F0E7 */
+    --foreground: 222.2 84% 4.9%;
+    --card: 111 23% 96%; /* Soft Sage */
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 111 23% 96%; /* Soft Sage */
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 125 25% 51%; /* Forest Green - #60A365 */
     --primary-foreground: 210 40% 98%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
+    --secondary: 111 15% 85%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 111 15% 90%;
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 165 52% 51%; /* Deep Sky Blue - #3EB489 */
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --border: 111 15% 85%;
+    --input: 111 15% 85%;
+    --ring: 125 25% 51%; /* Forest Green */
     --radius: 0.5rem;
-    --chart-1: 217.2 91.2% 59.8%;
-    --chart-2: 193 97% 39%;
+    --chart-1: 125 25% 51%;
+    --chart-2: 165 52% 51%;
     --chart-3: 213 97% 49%;
     --chart-4: 283 97% 59%;
     --chart-5: 343 97% 59%;
@@ -46,21 +46,21 @@
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
+    --primary: 125 25% 51%; /* Forest Green */
     --primary-foreground: 210 40% 98%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 165 52% 51%; /* Deep Sky Blue */
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-    --chart-1: 217.2 91.2% 59.8%;
-    --chart-2: 193 97% 39%;
+    --ring: 125 25% 51%; /* Forest Green */
+    --chart-1: 125 25% 51%;
+    --chart-2: 165 52% 51%;
     --chart-3: 213 97% 49%;
     --chart-4: 283 97% 59%;
     --chart-5: 343 97% 59%;
