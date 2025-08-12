@@ -6,7 +6,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 import { googleAI } from '@genkit-ai/googleai';
-import { MediaPart } from 'genkit/media';
+import type { MediaPart } from 'genkit/media';
 
 const GenerateRetirementVisionVideoInputSchema = z.object({
   prompt: z
@@ -36,11 +36,6 @@ async function downloadAndEncode(video: MediaPart): Promise<string> {
   const buffer = await response.arrayBuffer();
   const base64 = Buffer.from(buffer).toString('base64');
   return `data:video/mp4;base64,${base64}`;
-}
-
-// This is the exported server action that the client will call.
-export async function generateRetirementVisionVideo(input: GenerateRetirementVisionVideoInput): Promise<GenerateRetirementVisionVideoOutput> {
-  return generateRetirementVisionVideoFlow(input);
 }
 
 const generateRetirementVisionVideoFlow = ai.defineFlow(
@@ -83,3 +78,8 @@ const generateRetirementVisionVideoFlow = ai.defineFlow(
     return { videoUrl: videoDataUri };
   }
 );
+
+// This is the exported server action that the client will call.
+export async function generateRetirementVisionVideo(input: GenerateRetirementVisionVideoInput): Promise<GenerateRetirementVisionVideoOutput> {
+  return generateRetirementVisionVideoFlow(input);
+}
