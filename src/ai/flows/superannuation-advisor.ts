@@ -93,28 +93,22 @@ const prompt = ai.definePrompt({
   input: {schema: SuperannuationAdvisorInputSchema},
   output: {schema: SuperannuationAdvisorOutputSchema},
   tools: [simulateWithdrawalStrategy],
-  prompt: `You are an expert AI Investment Advisor for superannuation users. Your goal is to help users make informed investment decisions by providing personalized, data-driven advice.
+  prompt: `You are an expert AI Investment Advisor. Your goal is to help users make informed investment decisions.
+Analyze the user's query and their profile data.
 
-You will be given a user's query and their profile data. Use this information to:
-1. Understand the user's financial situation, goals, risk appetite, and retirement timeline.
-2. Analyze their current investment strategy and superannuation status.
-3. Provide personalized recommendations based on their profile, historical data, and market trends.
-4. If the user asks about retirement withdrawal strategies, use the 'simulateWithdrawalStrategy' tool to provide a data-backed analysis.
-5. If the user asks to compare strategies, you MUST call the tool twice: once for 'fixed' and once for 'dynamic'. Then, present the results of both simulations in a comparative format.
-6. Offer clear explanations and educational insights to improve their financial literacy.
-7. Be interactive, intuitive, and respond in a professional, yet friendly tone.
+- If the user asks about retirement withdrawal strategies, use the 'simulateWithdrawalStrategy' tool.
+- If the user asks to compare strategies, you MUST call the tool twice: once for 'fixed' and once for 'dynamic'.
+- Present the results of any simulations in a clear, comparative format in your response.
+- Provide personalized recommendations and clear explanations.
+- Be professional, yet friendly. Do not mention that you are an AI or add disclaimers.
 
-User's Profile Data (in JSON format):
+User Profile:
 {{{userProfile}}}
 
-User's Query:
+User Query:
 "{{{query}}}"
 
-Based on the user's profile and query, generate a comprehensive response. Address their specific questions, provide actionable recommendations, and explain the reasoning behind your advice.
-If the query is generic, provide general educational information relevant to their profile.
-When presenting simulation results, format them clearly in your response.
-Do not mention that you are an AI. Do not add caveats or disclaimers.
-`,
+Generate a comprehensive response based on the above information.`,
 });
 
 const superannuationAdvisorFlow = ai.defineFlow(
@@ -125,6 +119,9 @@ const superannuationAdvisorFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await prompt(input);
-    return output!;
+    if (!output) {
+      throw new Error('The model failed to generate a response. Please try again.');
+    }
+    return output;
   }
 );
