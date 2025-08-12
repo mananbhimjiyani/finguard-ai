@@ -1,5 +1,9 @@
 import { OnboardingRedirect } from '@/components/onboarding/onboarding-redirect';
 
 export default function Home() {
-  return <OnboardingRedirect />;
+  return (
+      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <h1>Loading...</h1>
+      </main>
+    );
 }

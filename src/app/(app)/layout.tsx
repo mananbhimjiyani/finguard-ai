@@ -3,6 +3,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Bot } from 'lucide-react';
 import { SidebarNav } from '@/components/layout/sidebar-nav';
 import { userProfileData } from '@/lib/data';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-body' });
 
 export default function AppLayout({
   children,
@@ -13,7 +16,7 @@ export default function AppLayout({
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen">
+      <div className={`${inter.variable} flex min-h-screen font-body`}>
         <Sidebar className="border-r">
           <SidebarHeader>
             <div className="flex items-center gap-3 p-2">

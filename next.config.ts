@@ -20,13 +20,25 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     serverActions: {
-      bodySizeLimit: '4mb',
+      bodySizeLimit: '10mb', // Increased for video data
+      serverActions: {
+        enableBodyCompression: false,
+      },
     },
   },
   httpAgentOptions: {
     keepAlive: true,
   },
   reactStrictMode: true,
+  redirects: async () => {
+    return [
+      {
+        source: '/',
+        destination: '/dashboard',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 
