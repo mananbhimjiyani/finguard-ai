@@ -113,7 +113,7 @@ Analyze the user's query and their detailed profile data.
 - If you are provided with pre-computed simulation results, your primary goal is to present these results to the user in a clear, easy-to-understand format.
 - If comparing strategies, start with a brief intro, then show the results for the 'Fixed' strategy, then the 'Dynamic' strategy, and conclude with a brief summary of the trade-offs.
 - If presenting a single strategy, introduce it, explain what the results mean, and then show the results.
-- If the user asks a general question about withdrawal strategies, use the 'simulateWithdrawalStrategy' tool. If the user does not specify a retirement age or initial withdrawal rate, you MUST use a retirement age of 65 and an initial withdrawal rate of 4% for the simulation. Do NOT ask the user for this information.
+- If the user asks a question that requires a simulation (e.g., "what is a safe withdrawal rate"), you MUST use the 'simulateWithdrawalStrategy' tool. If the user does not specify a retirement age or initial withdrawal rate, you MUST use a retirement age of 65 and an initial withdrawal rate of 4% for the simulation. Do NOT ask the user for this information.
 - Be professional, yet friendly. Do not mention that you are an AI or add disclaimers.
 
 User Profile:
@@ -191,7 +191,7 @@ const superannuationAdvisorFlow = ai.defineFlow(
         return output;
 
     } else {
-      // Handle general chat queries directly.
+      // Handle general chat queries directly, allowing the model to use tools if needed.
       const { output } = await prompt(input);
       if (!output) {
         throw new Error('The model failed to generate a response. Please try again.');
