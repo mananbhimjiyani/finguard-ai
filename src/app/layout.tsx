@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-body' });
 export const metadata: Metadata = {
   title: 'FinGuard AI',
   description: 'Your personal financial companion for retirement planning and security.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
